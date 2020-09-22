@@ -1,7 +1,0 @@
-{
-    "shadow": true,
-    "sub": true,
-
-    "undef": true,
-    "predef": ["console", "module", "require"]
-}

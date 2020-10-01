@@ -1,0 +1,431 @@
+module mac-fd-1-0 {
+  yang-version 1.1;
+  namespace "urn:onf:yang:mac-fd-1-0";
+  prefix mac-fd;
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import core-model-1-4 {
+    prefix core-model;
+  }
+  import mac-interface-1-0 {
+    prefix mac-interface;
+  }
+
+  organization
+    "openBackhaul.com proposal to Open Networking Foundation (ONF)";
+  contact
+    "WG Web : https://github.com/openBackhaul/Overview
+     WG List: MacFd@openBackhaul.com
+     Editor : Thorsten Heinze
+     Email  : Thorsten.Heinze@openBackhaul.com";
+  description
+    "Technology specific amendment to the ForwardingDomain class for documenting potential forwarding (Ethernet Switch) according to IEEE 802.1 .
+
+     Copyright 2019 openBackhaul.com
+
+     Licensed under the Apache License, Version 2.0 (the 'License');
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an 'AS IS' BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.";
+
+  revision 2020-09-30 {
+    description
+      "Model for the Transport SDN Pilot at Telefonica Germany.
+       Please view https://github.com/openBackhaul/macFd/issues for changes.";
+    reference
+      "https://github.com/openBackhaul/macFd/tree/tsp: Model definition
+       https://github.com/openBackhaul/onfCoreIm/tree/tsp: ONF TR-512 Core IM incl. Profile and enhanced Equipment definition";
+  }
+
+  augment "/core-model:control-construct/core-model:forwarding-domain" {
+    when "derived-from-or-self(./core-model:layer-protocol-name, 'mac-interface:LAYER_PROTOCOL_NAME_TYPE_MAC_LAYER')";
+    uses mac-fd-spec;
+    description
+      "none";
+  }
+
+  /****************************************
+   * package notifications
+   **************************************/ 
+
+  notification object-creation-notification {
+    uses object-creation-notification;
+    description
+      "none";
+  }
+
+  grouping object-creation-notification {
+    leaf counter {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "Counts object creation notifications.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      default "2010-11-20T14:00:00+01:00";
+      config false;
+      description
+        "none";
+    }
+    leaf object-id-ref {
+      type leafref {
+        path "/core-model:control-construct/core-model:forwarding-domain/core-model:uuid";
+        require-instance false;
+      }
+      config false;
+      description
+        "none";
+    }
+    leaf object-type {
+      type string;
+      default "Type of created object not specified.";
+      config false;
+      description
+        "none";
+    }
+    description
+      "none";
+  }
+
+  notification object-deletion-notification {
+    uses object-deletion-notification;
+    description
+      "none";
+  }
+
+  grouping object-deletion-notification {
+    leaf counter {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "Counts object deletion notifications.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      default "2010-11-20T14:00:00+01:00";
+      config false;
+      description
+        "none";
+    }
+    leaf object-id-ref {
+      type leafref {
+        path "/core-model:control-construct/core-model:forwarding-domain/core-model:uuid";
+        require-instance false;
+      }
+      config false;
+      description
+        "none";
+    }
+    description
+      "none";
+  }
+
+  notification attribute-value-changed-notification {
+    uses attribute-value-changed-notification;
+    description
+      "none";
+  }
+
+  grouping attribute-value-changed-notification {
+    leaf counter {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "Counts attribute value changed notifications.";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      default "2010-11-20T14:00:00+01:00";
+      config false;
+      description
+        "none";
+    }
+    leaf object-id-ref {
+      type leafref {
+        path "/core-model:control-construct/core-model:forwarding-domain/core-model:uuid";
+        require-instance false;
+      }
+      config false;
+      description
+        "none";
+    }
+    leaf attribute-name {
+      type string;
+      default "Attribute name not specified.";
+      config false;
+      description
+        "Name of the attribute that has been changed.";
+    }
+    leaf new-value {
+      type string;
+      default "New value not specified.";
+      config false;
+      description
+        "Attribute value converted to a string (xml, json, ...)";
+    }
+    description
+      "To be sent when an attribute has changed and one or more controllers have to update their data.";
+  }
+
+  notification problem-notification {
+    uses problem-notification;
+    description
+      "none";
+  }
+
+  grouping problem-notification {
+    leaf counter {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "Counts problem notifications";
+    }
+    leaf timestamp {
+      type yang:date-and-time;
+      default "2010-11-20T14:00:00+01:00";
+      config false;
+      description
+        "none";
+    }
+    leaf object-id-ref {
+      type leafref {
+        path "/core-model:control-construct/core-model:forwarding-domain/core-model:uuid";
+        require-instance false;
+      }
+      config false;
+      description
+        "none";
+    }
+    leaf problem {
+      type string;
+      default "Problem name not specified.";
+      config false;
+      description
+        "Name of the problem according to *Capability::supportedAlarmList";
+    }
+    leaf severity {
+      type string;
+      config false;
+      description
+        "Severity of the problem according to *Configuration::problemSeverityList";
+    }
+    description
+      "none";
+  }
+
+  /****************************************
+   * grouping statements for object classes
+   **************************************/ 
+
+  grouping mac-fd-spec {
+    container mac-fd-pac {
+      uses mac-fd-pac;
+      description
+        "none";
+    }
+    description
+      "The database that holds static and learned entries describing the MAC forwarding. Name in ieee802-dot1q-bridge.yang: filtering-database.";
+  }
+
+  grouping mac-fd-pac {
+    container mac-fd-capability {
+      config false;
+      uses mac-fd-capability;
+      description
+        "none";
+    }
+    container mac-fd-configuration {
+      uses mac-fd-configuration;
+      description
+        "none";
+    }
+    container mac-fd-status {
+      config false;
+      uses mac-fd-status;
+      description
+        "none";
+    }
+    description
+      "none";
+  }
+
+  grouping mac-fd-capability {
+    leaf maximum-number-of-entries {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "The maximum number of entries that can be held in the FDB. Name in ieee802-dot1q-bridge.yang: size.";
+    }
+    leaf maintenance-timer-range {
+      type string;
+      default "Range of the maintenance timer not yet defined.";
+      config false;
+      description
+        "Available time periods for maintenance configurations to be described. Concrete values shall be separated by commas (e.g. '10, 60, 360'). Ranges shall be expressed as two values separated by a minus (e.g. '10-360').";
+    }
+    description
+      "none";
+  }
+
+  grouping mac-fd-configuration {
+    leaf fd-name {
+      type string;
+      default "Forwarding Domain name not yet defined.";
+      description
+        "Name of the ForwardingDomain. Free text field to be filled by the operator.";
+    }
+    leaf mac-address {
+      type string;
+      default "00:00:00:00:00:00";
+      description
+        "Configuration of the MAC address of a switch or virtual switch, which is defined by some VLAN.";
+    }
+    leaf aging-time {
+      type int32;
+      units "s";
+      default "-1";
+      description
+        "The timeout period (10..10,000,000) in seconds for aging out dynamically-learned forwarding information. Name in ieee802-dot1q-bridge.yang: aging-time.";
+    }
+    leaf maintenance-timer {
+      type int32;
+      units "s";
+      default "-1";
+      description
+        "Time of existence of any maintenance configuration. false = maintenance timer is switched off. Valid values are defined in *Capability::maintenanceTimerRange.";
+    }
+    description
+      "none";
+  }
+
+  grouping mac-fd-status {
+    leaf mac-address-cur {
+      type string;
+      default "00:00:00:00:00:00";
+      config false;
+      description
+        "MAC address assigned to a switch or virtual switch, which is defined by some VLAN.";
+    }
+    leaf number-of-static-entries-cur {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "The number of Static Filtering entries currently in the FDB. Name in ieee802-dot1q-bridge.yang: static-entries.";
+    }
+    leaf number-of-dynamic-entries-cur {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "The number of Dynamic Filtering entries currently in the FDB. Name in ieee802-dot1q-bridge.yang: dynamic-entries.";
+    }
+    leaf number-of-mac-registrations-cur {
+      type int32;
+      default "-1";
+      config false;
+      description
+        "The number of MAC Address Registration entries currently in the FDB. Name in ieee802-dot1q-bridge.yang: mac-address-registration-entries.";
+    }
+    leaf fd-status {
+      type fd-status-type;
+      default "FD_STATUS_TYPE_NOT_YET_DEFINED";
+      config false;
+      description
+        "Operational status of the forwarding domain.";
+    }
+    description
+      "none";
+  }
+
+  /****************************************
+   * typedef statements
+   **************************************/ 
+  /*********************************************
+   * grouping statements for complex data types
+   *******************************************/ 
+
+  identity FD_STATUS_TYPE {
+    description
+      "none";
+  }
+
+  identity FD_STATUS_TYPE_UP {
+    base FD_STATUS_TYPE;
+    description
+      "Ready to pass packets.";
+  }
+
+  identity FD_STATUS_TYPE_DOWN {
+    base FD_STATUS_TYPE;
+    description
+      "The interface does not pass any packets.";
+  }
+
+  identity FD_STATUS_TYPE_TESTING {
+    base FD_STATUS_TYPE;
+    description
+      "In some test mode.  No operational packets can be passed.";
+  }
+
+  identity FD_STATUS_TYPE_UNKNOWN {
+    base FD_STATUS_TYPE;
+    description
+      "Status cannot be determined for some reason.";
+  }
+
+  identity FD_STATUS_TYPE_DORMANT {
+    base FD_STATUS_TYPE;
+    description
+      "Waiting for some external event.";
+  }
+
+  identity FD_STATUS_TYPE_NOT_PRESENT {
+    base FD_STATUS_TYPE;
+    description
+      "Some component (typically hardware) is missing.";
+  }
+
+  identity FD_STATUS_TYPE_LOWER_LAYER_DOWN {
+    base FD_STATUS_TYPE;
+    description
+      "Down due to state of lower-layer interface(s).";
+  }
+
+  identity FD_STATUS_TYPE_ADMIN_DOWN {
+    base FD_STATUS_TYPE;
+    description
+      "Down due to configuration.";
+  }
+
+  identity FD_STATUS_TYPE_NOT_YET_DEFINED {
+    base FD_STATUS_TYPE;
+    description
+      "none";
+  }
+
+  /****************************************
+   * package super-types
+   **************************************/ 
+
+  typedef fd-status-type {
+    type identityref {
+      base FD_STATUS_TYPE;
+    }
+    description
+      "Current Status of the Forwarding Domain";
+  }
+}

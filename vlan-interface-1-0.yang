@@ -1,0 +1,1495 @@
+module vlan-interface-1-0 {
+    yang-version 1.1;    
+    namespace "urn:onf:yang:vlan-interface-1-0";
+    prefix vlan-interface;
+
+    import ietf-yang-types {
+        prefix yang;
+    }
+    import core-model-1-4 {
+        prefix core-model;
+    }
+
+    organization 
+         "openBackhaul.com proposal to Open Networking Foundation (ONF)";
+    contact 
+        "WG Web : https://github.com/openBackhaul/Overview
+        WG List: VlanInterface@openBackhaul.com
+        Editor : Thorsten Heinze
+        Email  : Thorsten.Heinze@openBackhaul.com";
+    description
+        "Technology specific interface definition for VLAN interfaces according to IEEE 802.1Q-2018.
+        
+        Copyright 2019 openBackhaul.com
+        
+        Licensed under the Apache License, Version 2.0 (the 'License');
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+        http://www.apache.org/licenses/LICENSE-2.0
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an 'AS IS' BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.";
+
+    revision 2020-07-31 {
+      description 
+        "Model for the Transport SDN Pilot at Telefonica Germany.
+         Please view https://github.com/openBackhaul/vlaninterface/issues for changes.";
+      reference
+        "https://github.com/openBackhaul/vlaninterface/tree/tsp: Model definition
+        https://github.com/openBackhaul/onfCoreIm/tree/tsp: ONF TR-512 Core IM incl. Profile and enhanced Equipment definition";
+    }
+
+    identity LAYER_PROTOCOL_NAME_TYPE_VLAN_LAYER {
+      base core-model:LAYER_PROTOCOL_NAME_TYPE; 
+      description 
+        "none"; 
+    }
+ 
+    augment "/core-model:control-construct/core-model:logical-termination-point/core-model:layer-protocol"{ 
+      when "derived-from-or-self(./core-model:layer-protocol-name, 'vlan-interface:LAYER_PROTOCOL_NAME_TYPE_VLAN_LAYER')";
+      uses vlan-interface-lp-spec;
+      description 
+        "none";
+    }
+      
+
+    /****************************************
+    * package notifications
+    **************************************/ 
+        notification object-creation-notification {
+            uses object-creation-notification;
+            description    
+                "none";
+        }
+        grouping object-creation-notification {
+            leaf counter {
+                type int32;
+                default "-1";
+                config false;
+                description    
+                    "Counts object creation notifications.";
+            }
+            leaf timestamp {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "none";
+            }
+            leaf object-id-ref {
+	        type leafref {
+	            path "/core-model:control-construct/core-model:logical-termination-point/core-model:uuid";
+		    require-instance false;
+	        }
+                config false;
+                description    
+                    "none";
+            }
+            leaf object-type {
+                type string;
+                default "Type of created object not specified.";
+                config false;
+                description    
+                    "none";
+            }
+            description    
+                "none";
+        }
+        notification object-deletion-notification {
+            uses object-deletion-notification;
+            description    
+                "none";
+        }
+        grouping object-deletion-notification {
+            leaf counter {
+                type int32;
+                default "-1";
+                config false;
+                description    
+                    "Counts object deletion notifications.";
+            }
+            leaf timestamp {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "none";
+            }
+            leaf object-id-ref {
+	        type leafref {
+	            path "/core-model:control-construct/core-model:logical-termination-point/core-model:uuid";
+		    require-instance false;
+	        }
+                config false;
+                description    
+                    "none";
+            }
+            description    
+                "none";
+        }
+        notification attribute-value-changed-notification {
+            uses attribute-value-changed-notification;
+            description    
+                "none";
+        }
+        grouping attribute-value-changed-notification {
+            leaf counter {
+                type int32;
+                default "-1";
+                config false;
+                description    
+                    "Counts attribute value changed notifications.";
+            }
+            leaf timestamp {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "none";
+            }
+            leaf object-id-ref {
+	        type leafref {
+	            path "/core-model:control-construct/core-model:logical-termination-point/core-model:uuid";
+		    require-instance false;
+	        }
+                config false;
+                description    
+                    "none";
+            }
+            leaf attribute-name {
+                type string;
+                default "Attribute name not specified.";
+                config false;
+                description    
+                    "Name of the attribute that has been changed.";
+            }
+            leaf new-value {
+                type string;
+                default "New value not specified.";
+                config false;
+                description    
+                    "Attribute value converted to a string (xml, json, ...)";
+            }
+            description    
+                "none";
+        }
+        notification problem-notification {
+            uses problem-notification;
+            description    
+                "none";
+        }
+        grouping problem-notification {
+            leaf counter {
+                type int32;
+                default "-1";
+                config false;
+                description    
+                    "Counts problem notifications";
+            }
+            leaf timestamp {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "none";
+            }
+            leaf object-id-ref {
+	        type leafref {
+	            path "/core-model:control-construct/core-model:logical-termination-point/core-model:uuid";
+		    require-instance false;
+	        }
+                config false;
+                description    
+                    "none";
+            }
+            leaf problem {
+                type string;
+                default "Problem name not specified.";
+                config false;
+                description    
+                    "Name of the problem according to *Capability::supportedAlarmList";
+            }
+            leaf severity {
+                type severity-type;
+                default "SEVERITY_TYPE_WARNING";
+                config false;
+                description    
+                    "Severity of the problem according to *Configuration::problemSeverityList";
+            }
+            description    
+                "none";
+        }
+
+    /****************************************
+    * grouping statements for object classes
+    **************************************/ 
+        /****************************************
+        * package super-classes
+        **************************************/ 
+            grouping current-problem {
+                leaf sequence-number {
+                type int16;
+                    config false;
+                    description    
+                    "Unique sequence number of the current problem object.";
+                }
+                leaf timestamp {
+                    type yang:date-and-time;
+                    default "2010-11-20T14:00:00+01:00";
+                    config false;
+                    description    
+                    "Time when the alarm was raised";
+                }
+                leaf problem-severity {
+                    type severity-type;
+                    default "SEVERITY_TYPE_NOT_YET_DEFINED";
+                    config false;
+                    description    
+                    "Severity of the alarm.";
+                }
+                description    
+                "none";
+            }
+            grouping current-performance {
+                leaf timestamp {
+                    type yang:date-and-time;
+                    default "2010-11-20T14:00:00+01:00";
+                    config false;
+                    description    
+                    "The timestamp associated with when the current data was collected.";
+                }
+                leaf suspect-interval-flag {
+                    type boolean;
+                    default "false";
+                    config false;
+                    description    
+                    "This attribute is used to indicate that the performance data for the current period may not be reliable. Some reasons for this to occur are:
+                        – Suspect data were detected by the actual resource doing data collection.
+                        – Transition of the administrativeState attribute to/from the 'lock' state.
+                        – Transition of the operationalState to/from the 'disabled' state.
+                        – Scheduler setting that inhibits the collection function.
+                        – The performance counters were reset during the interval.
+                        – The currentData (or subclass) object instance was created during the monitoring period.";
+                }
+                leaf elapsed-time {
+                type int64;
+                    units "s";
+                    default "-1";
+                    config false;
+                    description    
+                    "Number of seconds that elapsed since the last reset of the counter.";
+                }
+                leaf scanner-id {
+                    type string;
+                    default "Scanner ID not defined.";
+                    config false;
+                    description    
+                    "none";
+                }
+                leaf granularity-period {
+                    type granularity-period-type;
+                    config false;
+                    description    
+                    "Time period between reset of the underlying counter.";
+                }
+                description    
+                "none";
+            }
+            grouping historical-performance {
+                leaf suspect-interval-flag {
+                    type boolean;
+                    default "false";
+                    config false;
+                    description    
+                    "This attribute indicates that the data collected during the interval is suspect.";
+                }
+                leaf history-data-id {
+                    type string;
+                    default "History Data ID not defined.";
+                    config false;
+                    description    
+                    "none";
+                }
+                leaf granularity-period {
+                    type granularity-period-type;
+                    config false;
+                    description    
+                    "Time period between reset of the underlying counter.";
+                }
+                leaf period-end-time {
+                    type yang:date-and-time;
+                    config false;
+                    description    
+                    "Time when the counter values have been recorded and the counter reset.";
+                }
+                description    
+                "none";
+            }
+
+        grouping vlan-interface-lp-spec {
+            container vlan-interface-pac {
+                uses vlan-interface-pac;
+                description    
+                "none";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-pac {
+            container vlan-interface-capability {
+                config false;
+                uses vlan-interface-capability;
+                description    
+                "none";
+            }
+            container vlan-interface-configuration {
+                uses vlan-interface-configuration;
+                description    
+                "none";
+            }
+            container vlan-interface-status {
+                config false;
+                uses vlan-interface-status;
+                description    
+                "none";
+            }
+            container vlan-interface-current-problems {
+                config false;
+                uses vlan-interface-current-problems;
+                description    
+                "none";
+            }
+            container vlan-interface-current-performance {
+                config false;
+                uses vlan-interface-current-performance;
+                description    
+                "none";
+            }
+            container vlan-interface-historical-performances {
+                config false;
+                uses vlan-interface-historical-performances;
+                description    
+                "none";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-capability {
+            leaf-list supported-sub-layer-protocol-name-list {
+                type sub-layer-protocol-name-type;
+                default "SUB_LAYER_PROTOCOL_NAME_TYPE_NOT_YET_DEFINED";
+                config false;
+                description     
+                 "Lists the supported kinds of components. ";
+            }
+            leaf-list supported-interface-kind-list {
+                type interface-kind-type;
+                default "INTERFACE_KIND_TYPE_NOT_YET_DEFINED";
+                config false;
+                description     
+                 "type-capabilties.";
+            }
+            leaf tagging-and-mvrp-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "capabilities::tagging. true = Interface supports tagging of frames and MVRP. ";
+            }
+            leaf configuring-ingress-tag-filtering-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "capabilities::tagging. true = Configuring ingressTagFiltering is available.";
+            }
+            leaf ingress-vlan-id-filtering-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "capabilities::ingress-filtering. true = Discarding ingress frames that are tagged with a VLAN ID, which is unknown to the interface, is available at the interface. false = Filtering happens only at the egress.";
+            }
+            leaf-list available-pcp-bits-interpretation-kind-list {
+                type pcp-bits-interpretation-kind-type;
+                default "PCP_BITS_INTERPRETATION_KIND_TYPE_NOT_YET_DEFINED";
+                config false;
+                description     
+                 "List of the available ways of translating the PCP bits of the ingress frames into Priority values.";
+            }
+            leaf configuring-pcp-bits-decoding-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "false = PCP-bits are decoded according to table 3 in chapter 6.9.3 of IEEE Std 802.1Q-2018; true = Device supports flexibly configuring the translation of PCP-bits values to Priority values and drop eligibility.";
+            }
+            leaf configuring-pcp-bits-encoding-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "false = PCP-bits are encoded according to table 2 in chapter 6.9.3 of IEEE Std 802.1Q-2018; true = Device supports flexibly configuring the translation of Priority values and drop eligibility to PCP-bits values.";
+            }
+            leaf drop-eligible-indicator-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Decoding and encoding of the Drop Eligible Indicator (DEI) bit of the VLAN header is supported by the device.";
+            }
+            leaf number-of-available-priorities {
+                type int8;
+                default "-1";
+                config false;
+                description    
+                    "Number of Priority values, which are supported at the device (usually 8 (0-7)).";
+            }
+            leaf received-priority-overwriting-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Device supports overwriting the Received Priority of the ingress frames with Regenerated Priority values.";
+            }
+            leaf vlan-id-translation-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Translation of VLAN IDs is available at this interface.";
+            }
+            leaf egress-vlan-id-translation-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Separate translation table for VLAN IDs of egress frames is available.";
+            }
+            leaf port-and-protocol-based-vlan-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "protocol-based-vlan-classification. true = Restricting forwarding of frames of specific VLANs on specific protocols at this interface is available. Name in ieee802-dot1q-bridge.yang: protocol-based-vlan-classification.";
+            }
+            leaf max-number-of-protocol-vlan-id-groupings {
+                type int16;
+                default "-1";
+                config false;
+                description    
+                    "max-vid-set-entries. Only meaningful if (portAndProtocolBasedVlanIsAvail==true) AND (subLayerProtocolName!=D_BRIDGE_COMPONENT). Maximum number of entries supported in the forwardedProtocolVidGroupingList at this interface. Name in ieee802-dot1q-bridge.yang: max-vid-set-entries.";
+            }
+            leaf service-access-priority-tagging-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Adding a priority S-VLAN tag (no VID value) is available on this C_VLAN_BRIDGE_PORT.";
+            }
+            leaf configuring-service-access-priority-mapping-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Freely configuring of the mapping of Priority values to the PCP-bits values of the amended priority S-VLAN tag (no VID value) is available on this C_VLAN_BRIDGE_PORT.";
+            }
+            leaf number-of-available-traffic-classes {
+                type int8;
+                default "-1";
+                config false;
+                description    
+                    "Number of Traffic Classes (queues), which are supported at the device (usually 8).";
+            }
+            leaf restricted-automated-vlan-registration-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "false = The automated registration and modification of VLANs by the Multiple Registration Protocol (MRP) can not be restricted to those VIDs that already had a static entry.";
+            }
+            leaf admin-shut-down-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "false = Manual switching on and off of the interface without deleting it (underlying OSI network layers are also not affected) is available.";
+            }
+            leaf-list supported-loop-back-kind-list {
+                type loop-back-type;
+                default "LOOP_BACK_TYPE_NOT_YET_DEFINED";
+                config false;
+                description     
+                 "List of supported kinds of looping back.";
+            }
+            leaf maintenance-timer-range {
+                type string;
+                default "Range of the maintenance timer not yet defined.";
+                config false;
+                description    
+                    "Available time periods for maintenance configurations to be described. Concrete values shall be separated by commas (e.g. '10, 60, 360'). Ranges shall be expressed as two values separated by a minus (e.g. '10-360').";
+            }
+            leaf statistics-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Statistics collection and aggregation is supported on this interface.";
+            }
+            leaf-list supported-alarm-list {
+                type string;
+                default "Supported Alarms Not Yet Defined";
+                config false;
+                description     
+                 "Available alarms to be listed. Mandatory: 'VlanInterfaceDown' and 'MtuMissmatch'. Further alarms might be added by the device vendors.";
+            }
+            leaf performance-monitoring-is-avail {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Collection and aggregation of performance values is available.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-configuration {
+            leaf interface-name {
+                type string;
+                default "Interface name not yet defined.";
+                description    
+                    "Description of the interface, could be a name, could be a number. Free text field to be filled by the operator.";
+            }
+            leaf interface-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "Only effective if (adminShutDownIsAvail==true). true = Activation of the interface. false = De-activation of the interface without deleting it (underlying OSI network layers are not affected).";
+            }
+            leaf sub-layer-protocol-name {
+                type sub-layer-protocol-name-type;
+                default "SUB_LAYER_PROTOCOL_NAME_TYPE_NOT_YET_DEFINED";
+                description    
+                    "component-name. Used to reference configured component kind. Name in ieee802-dot1q-bridge.yang: component-name.";
+            }
+            leaf interface-kind {
+                type interface-kind-type;
+                default "INTERFACE_KIND_TYPE_NOT_YET_DEFINED";
+                description    
+                    "port-type. Indicates the capabilities of this port. Name in ieee802-dot1q-bridge.yang: port-type.";
+            }
+            leaf default-vlan-id {
+                type int64;
+                default "-1";
+                description    
+                    "pvid. Not effective if (subLayerProtocolName==D_BRIDGE_COMPONENT). Untagged frames on the ingress of this VlanInterface get amended by a VLAN header and its 12 VID-bits (VLAN ID) get filled with the default VLAN ID (1-4094). If a value between 4096 and 4294967295 gets assigned, then it represents a local VLAN. Name in ieee802-dot1q-bridge.yang: pvid.";
+            }
+            leaf default-priority {
+                type int8;
+                default "-1";
+                description    
+                    "default-priority. Untagged frames on the ingress of this VlanInterface get associated with this Priority value. Name in ieee802-dot1q-bridge.yang: default-priority.";
+            }
+            leaf ingress-tag-filtering {
+                type ingress-tag-filtering-type;
+                default "INGRESS_TAG_FILTERING_TYPE_NOT_YET_DEFINED";
+                description    
+                    "acceptable-frame. Only effective if (configuringIngressTagFilteringIsAvail==true) AND (subLayerProtocolName!=D_BRIDGE_COMPONENT). Defines the type of frame acceptable at this interface. Name in ieee802-dot1q-bridge.yang: acceptable-frame.";
+            }
+            leaf ingress-vlan-id-filtering-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "enable-ingress-filtering. Only effective if (ingressVlanIdFilteringIsAvail==true) and (subLayerProtocolName!=D_BRIDGE_COMPONENT). true = Received frames with a VID that is unknown to the interface get discarded already at the ingress. Name in ieee802-dot1q-bridge.yang: enable-ingress-filtering.";
+            }
+            leaf pcp-bits-interpretation-kind {
+                type pcp-bits-interpretation-kind-type;
+                default "PCP_BITS_INTERPRETATION_KIND_TYPE_NOT_YET_DEFINED";
+                description    
+                    "pcp-selection. Defines how to decode and encode the values of the 3 Priority Code Point (PCP) bits of the VLAN header at this interface. Name in ieee802-dot1q-bridge.yang: pcp-selection.";
+            }
+            list pcp-bit-to-priority-mapping-list {
+                key "to-be-decoded-pcp-bits-value";
+                max-elements 8;
+                uses pcp-bits-to-priority-mapping-type;
+                description    
+                "pcp-decoding-table. Only effective if (configuringPcpBitsDecodingIsAvail==true). Configurable decoding of the PCP-bits of the ingress VLAN header into Priority values and drop eligibility. This attribute is shortening the ieee802-dot1q-bridge.yang from a table to a list, because it allows only configuring the values for the way of PCP bit interpretation, which is actually chosen in pcpBitsInterpretationKind. Name in ieee802-dot1q-bridge.yang: pcp-decoding-table.";
+            }
+            list pcp-bits-encoding-mapping-list {
+                key "to-be-encoded-priority-value to-be-encoded-drop-eligibility";
+                max-elements 16;
+                uses priority-to-pcp-bits-mapping-type;
+                description    
+                "pcp-encoding-table. Only effective if (configuringPcpBitsEncodingIsAvail==true). Configurable encoding of Priority value and drop eligibility into the PCP-bits of the ingress VLAN header. This attribute is shortening the ieee802-dot1q-bridge.yang from a table to a list, because it allows only configuring the values for the way of PCP bit interpretation, which is actually chosen in pcpBitsInterpretationKind. Name in ieee802-dot1q-bridge.yang: pcp-encoding-table.
+                    ";
+            }
+            leaf drop-eligible-indicator-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "use-dei. Only effective if (dropEligibleIndicatorIsAvail==true). true = The Drop Eligible Indicator (DEI) bit of ingress VLAN header is decoded into drop eligibility and vice versa for egress frames. Name in ieee802-dot1q-bridge.yang: use-dei.";
+            }
+            leaf drop-eligible-encoding-is-required {
+                type boolean;
+                default "false";
+                description    
+                    "drop-encoding. true = Queued frames, which have drop eligibility==true, get dropped, if the chosen pcpBitsInterpretationKind does not allow encoding the DEI bit set on true on the egress. Name in ieee802-dot1q-bridge.yang: drop-encoding.";
+            }
+            leaf received-priority-overwriting-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "Only effective if (receivedPriorityOverwritingIsAvail==true). true = Overwriting the Received Priority value derived from the PCP-bits of the ingress frame with the Regenerated Priority values listed in ingressPriorityOverwritingTable is activated.";
+            }
+            list received-priority-overwriting-list {
+                key "to-be-overwritten-priority-value";
+                max-elements 8;
+                uses received-priority-overwriting-type;
+                description    
+                "priority-regeneration. Only effective if (receivedPriorityOverwritingIsAvail==true) AND (receivedPriorityOverwritingIsOn==true). The Received Priority value derived from the PCP-bits of the ingress frame will be overwritten with the Regenerated Priority value from the list. Name in ieee802-dot1q-bridge.yang: priority-regeneration.";
+            }
+            leaf vlan-id-translation-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "enable-vid-translation-table. Only effective if (vlanIdTranslationIsAvail==true) AND (subLayerProtocolName!=D_BRIDGE_COMPONENT). If (vlanIdTranslationIsOn==true) AND (egressVlanIdTranslationIsOn==true), the VLAN IDs of ingress frames get translated according to the mapping, which is defined in vidTranslationMapping. If (vlanIdTranslationIsOn==true) AND (egressVlanIdTranslationIsOn==false), the mapping, which is defined in vidTranslationMapping, is used for both ingress and egress frames. Name in ieee802-dot1q-bridge.yang: enable-vid-translation-table.";
+            }
+            list external-to-internal-vlan-id-mapping-list {
+                key "external-vlan-id";
+                uses external-to-internal-vlan-id-mapping-type;
+                description    
+                "vid-translations. Only effective if (subLayerProtocolName!=D_BRIDGE_COMPONENT). If (vlanIdTranslationIsOn==true) AND (egressVlanIdTranslationIsOn==true), the VLAN IDs of ingress frames get translated according to this mapping. If (vlanIdTranslationIsOn==true) AND (egressVlanIdTranslationIsOn==false), the VLAN IDs of both ingress and egress frames get mapped according to this mapping. Name in ieee802-dot1q-bridge.yang: vid-translations.";
+            }
+            leaf egress-vlan-id-translation-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "enable-egress-vid-translation-table. Only effective if (egressVlanIdTranslationIsAvail==true) AND (subLayerProtocolName!=D_BRIDGE_COMPONENT). true = The VLAN IDs of egress frames get translated according to the mapping, which is defined in egressVidTranslationMapping. Name in ieee802-dot1q-bridge.yang: enable-egress-vid-translation-table. References: 12.10.1.9 of IEEE Std 802.1Q-2018 and 6.9 of IEEE Std 802.1Q-2018.";
+            }
+            list internal-to-egress-vlan-id-mapping-list {
+                key "internal-vlan-id";
+                uses internal-to-egress-vlan-id-mapping-type;
+                description    
+                "egress-vid-translations. Only effective if (subLayerProtocolName!=D_BRIDGE_COMPONENT) AND (egressVlanIdTranslationIsOn==true). The VLAN IDs of egress frames get translated according to this mapping. Name in ieee802-dot1q-bridge.yang: egress-vid-translations.";
+            }
+            leaf port-and-protocol-based-vlan-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "Only effective if (portAndProtocolBasedVlanIsAvail==true) AND (subLayerProtocolName!=D_BRIDGE_COMPONENT).  true = Restricting forwarding of frames of specific VLANs on specific protocols at this interface is activated.";
+            }
+            list forwarded-protocol-vlan-id-grouping-list {
+                key "forwarded-protocol-group-id";
+                uses forwarded-protocol-vlan-id-grouping-type;
+                description    
+                "protocol-group-vid-set. Only effective if (portAndProtocolBasedVlanIsOn==true). Associates lists of protocols with lists of VIDs to combinations, which are forwarded at this interface. Name in ieee802-dot1q-bridge.yang: protocol-group-vid-set.";
+            }
+            leaf service-access-priority-tagging-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "service-access-priority-selection. Only effective if (serviceAccessPriorityTaggingIsAvail==true). true = Amending priority S-VLAN tags (no VID value) to egress frames at this C_VLAN_BRIDGE_PORT is activated. Name in ieee802-dot1q-bridge.yang: service-access-priority-selection.
+                    ";
+            }
+            list service-access-priority-mapping-list {
+                key "c-vlan-priority-value";
+                max-elements 8;
+                uses service-access-priority-mapping-type;
+                description    
+                "service-access-priority. Only effective if (serviceAccessPriorityTaggingIsOn==true) AND (configuringServiceAccessPriorityMappingIsAvail==true). The PCP-bits of the priority S-VLAN tag (no VID value), which is amended to the egress frames at this C_VLAN_BRIDGE_PORT, are generated according to this table from the Priority value. Name in ieee802-dot1q-bridge.yang: service-access-priority.";
+            }
+            list priority-to-traffic-class-mapping-list {
+                key "priority-value";
+                max-elements 8;
+                uses priority-to-traffic-class-mapping-type;
+                description    
+                "traffic-class-map. Mapping of the Priority values into Traffic Classes (queues). This attribute is shortening the ieee802-dot1q-bridge.yang from a table to a list, because it allows only configuring the values for the number of traffic classes actually available at the device. Name in ieee802-dot1q-bridge.yang: traffic-class-map.
+                    ";
+            }
+            leaf restricted-automated-vlan-registration-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "enable-restricted-vlan-registration. Only effective if (restrictedAutomatedVlanRegistrationIsAvail==true) and (subLayerProtocolName!=D_BRIDGE_COMPONENT). true = Automated VLAN registration by the Multiple Registration Protocol (MRP) is restricted to those VIDs that already had a static entry. Name in ieee802-dot1q-bridge.yang: enable-restricted-vlan-registration.";
+            }
+            leaf admin-point-to-point {
+                type admin-point-to-point-type;
+                default "ADMIN_POINT_TO_POINT_TYPE_NOT_YET_DEFINED";
+                description    
+                    "admin-point-to-point. For a port running spanning tree, this object represents the administrative point-to-point status of the LAN segment attached to this port, using the enumeration values of IEEE Std 802.1AC. A value of forceTrue(1) indicates that this port should always be treated as if it is connected to a point-to-point link. A value of forceFalse(2) indicates that this port should be treated as having a shared media connection. A value of auto(3) indicates that this port is considered to have a point-to-point link if it is an Aggregator and all of its members are aggregatable, or if the MAC entity is configured for full duplex operation, either through auto-negotiation or by management means. Manipulating this object changes the underlying adminPointToPointMAC. Name in ieee802-dot1q-bridge.yang: admin-point-to-point.
+                    *****Potentially, this attribute should be part of an STP/RSTP/MSTP Interface definition and be deleted here.";
+            }
+            leaf loop-back-kind-on {
+                type loop-back-type;
+                default "LOOP_BACK_TYPE_NOT_YET_DEFINED";
+                description    
+                    "Maintenance Feature. Configuration of a loop back on this interface.";
+            }
+            leaf maintenance-timer {
+                type int32;
+                units "s";
+                default "-1";
+                description    
+                    "Time of existence of any maintenance configuration. 0 = maintenance timer is switched off. Valid values are defined in *Capability::maintenanceTimerRange.";
+            }
+            leaf statistics-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "Only effective if (statisticsIsAvail==true). true = Continuous statistics counters are switched on.";
+            }
+            list problem-kind-severity-list {
+                key "problem-kind-name";
+                uses problem-kind-severity-type;
+                description    
+                "Severity of each entry of the SupportedAlarmList to be configured.";
+            }
+            leaf performance-monitoring-is-on {
+                type boolean;
+                default "false";
+                description    
+                    "Only effective if (performanceMonitoringIsAvail==true). true = Collection and aggregation of statistics is switched on.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-status {
+            leaf interface-status {
+                type interface-status-type;
+                default "INTERFACE_STATUS_TYPE_NOT_YET_DEFINED";
+                config false;
+                description    
+                    "Operational status of the interface.";
+            }
+            leaf loop-back-kind-up {
+                type loop-back-type;
+                config false;
+                description    
+                    "The currently active (not just configured) type of loop back.";
+            }
+            leaf statistics-is-up {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Statistics are currently counted";
+            }
+            leaf performance-monitoring-is-up {
+                type boolean;
+                default "false";
+                config false;
+                description    
+                    "true = Performance values are currently collected and aggregated.";
+            }
+            leaf timestamp {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "none";
+            }
+            leaf total-bytes-input {
+                type int64;
+                units "Byte";
+                default "-1";
+                config false;
+                description    
+                    "octets-rx. The total number of octets in all valid frames received. Name in ieee802-dot1q-bridge.yang: octets-rx.";
+            }
+            leaf total-frames-input {
+                type int64;
+                units "frame";
+                default "-1";
+                config false;
+                description    
+                    "frame-rx. Number of frames that have been received by this port from its segment. Name in ieee802-dot1q-bridge.yang: frame-rx.";
+            }
+            leaf total-bytes-output {
+                type int64;
+                units "Byte";
+                default "-1";
+                config false;
+                description    
+                    "octets-tx. The total number of octets that have been transmitted by this port to its segment. Name in ieee802-dot1q-bridge.yang: octets-tx.";
+            }
+            leaf total-frames-output {
+                type int64;
+                units "frame";
+                default "-1";
+                config false;
+                description    
+                    "frame-tx. The number of frames that have been transmitted by this port to its segment. Note that a frame transmitted on the interface corresponding to this port is only counted by this object if and only if it is for a protocol being processed by the local bridging function, including Bridge management frames. Name in ieee802-dot1q-bridge.yang: frame-tx.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-current-problems {
+            list current-problem-list {
+                key "sequence-number";
+                config false;
+                uses vlan-interface-current-problem-type;
+                description    
+                "none";
+            }
+            leaf number-of-current-problems {
+                type int8;
+                default "-1";
+                config false;
+                description    
+                    "Number of alarms, which are currently active on this interface.";
+            }
+            leaf time-of-latest-change {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "Date and time when the list of alarms has been changed for the last time.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-current-performance {
+            list current-performance-data-list {
+                key "granularity-period";
+                config false;
+                uses vlan-interface-current-performance-type;
+                description    
+                "none";
+            }
+            leaf number-of-current-performance-sets {
+                type int8;
+                default "-1";
+                config false;
+                description    
+                    "Number of sets of current performance values, which are provided in the list.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-historical-performances {
+            list historical-performance-data {
+                key "granularity-period period-end-time";
+                config false;
+                uses vlan-interface-historical-performance-type;
+                description    
+                "none";
+            }
+            leaf number-of-historical-performance-sets {
+                type int16;
+                default "-1";
+                config false;
+                description    
+                    "Number of sets of historical performance values, which are provided in the list.";
+            }
+            leaf time-of-latest-change {
+                type yang:date-and-time;
+                default "2010-11-20T14:00:00+01:00";
+                config false;
+                description    
+                    "Date and time when the list of sets of historical performance values has been changed for the last time (e.g. new one added or existing one deleted).";
+            }
+            description    
+                "none";
+        }
+
+/****************************************
+* typedef statements
+**************************************/ 
+        typedef loop-back-type {
+            type identityref {
+                base LOOP_BACK_TYPE;
+            }
+            description    
+                "none";
+        }
+        typedef sub-layer-protocol-name-type {
+            type identityref {
+                base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            }
+            description    
+                "Represents the type of Component.";
+        }
+        typedef interface-kind-type {
+            type identityref {
+                base INTERFACE_KIND_TYPE;
+            }
+            description    
+                "type-capabilties. The type of feature capabilities supported with port. Indicates the capabilities of this port. Name in ieee802-dot1q-bridge.yang:type-capabilties.";
+        }
+        typedef ingress-tag-filtering-type {
+            type identityref {
+                base INGRESS_TAG_FILTERING_TYPE;
+            }
+            description    
+                "none";
+        }
+        typedef pcp-bits-interpretation-kind-type {
+            type identityref {
+                base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            }
+            description    
+                "pcp-selection-type. Ways of translating the PCP-bit values of the ingress frames into Priority values. Name in ieee802-dot1q-bridge.yang: pcp-selection-type. References: 12.6.2.5.3 of IEEE Std 802.1Q-2018 and 6.9.3 of IEEE Std 802.1Q-2018.";
+        }
+        typedef admin-point-to-point-type {
+            type identityref {
+                base ADMIN_POINT_TO_POINT_TYPE;
+            }
+            description    
+                "admin-point-to-point";
+        }
+
+/*********************************************
+* grouping statements for complex data types
+*******************************************/ 
+        identity LOOP_BACK_TYPE {
+            description    
+                "none";
+        }
+        identity LOOP_BACK_TYPE_BACK_TO_LOCAL {
+            base LOOP_BACK_TYPE;
+            description    
+                "Returning the Ethernet frames of the local site on the outgoing interface back to the local site.";
+        }
+        identity LOOP_BACK_TYPE_BACK_TO_REMOTE {
+            base LOOP_BACK_TYPE;
+            description    
+                "Returning the incoming Ethernet frames back to the remote site.";
+        }
+        identity LOOP_BACK_TYPE_NONE {
+            base LOOP_BACK_TYPE;
+            description    
+                "none";
+        }
+        identity LOOP_BACK_TYPE_NOT_YET_DEFINED {
+            base LOOP_BACK_TYPE;
+            description    
+                "none";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE {
+            description    
+                "none";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE_D_BRIDGE_COMPONENT {
+            base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            description    
+                "VLAN unaware component";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE_C_VLAN_COMPONENT {
+            base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            description    
+                "C-VLAN component";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE_S_VLAN_COMPONENT {
+            base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            description    
+                "S-VLAN component";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE_EDGE_RELAY_COMPONENT {
+            base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            description    
+                "EVB station ER component";
+        }
+        identity SUB_LAYER_PROTOCOL_NAME_TYPE_NOT_YET_DEFINED {
+            base SUB_LAYER_PROTOCOL_NAME_TYPE;
+            description    
+                "none";
+        }
+        identity INTERFACE_KIND_TYPE {
+            description    
+                "none";
+        }
+        identity INTERFACE_KIND_TYPE_D_BRIDGE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be a VLAN-unaware member of an 802.1Q Bridge.";
+        }
+        identity INTERFACE_KIND_TYPE_C_VLAN_BRIDGE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be a C-TAG aware port of an enterprise VLAN aware Bridge.";
+        }
+        identity INTERFACE_KIND_TYPE_CUSTOMER_EDGE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be a C-TAG aware port of a Provider Bridge used for connections to the exterior of a PBN (Provider Bridged Network) or PBBN (Provider Backbone Bridged Network).";
+        }
+        identity INTERFACE_KIND_TYPE_PROVIDER_EDGE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "none";
+        }
+        identity INTERFACE_KIND_TYPE_CUSTOMER_NETWORK_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be an S-TAG aware port of a Provider Bridge or Backbone Edge Bridge used for connections to the exterior of a PBN (Provider Bridged Network) or PBBN (Provider Backbone Bridged Network).";
+        }
+        identity INTERFACE_KIND_TYPE_PROVIDER_NETWORK_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be an S-TAG aware port of a Provider Bridge or Backbone Edge Bridge used for connections within a PBN (Provider Bridged Network) or PBBN (Provider Backbone Bridged Network).";
+        }
+        identity INTERFACE_KIND_TYPE_CUSTOMER_BACKBONE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be a I-TAG aware port of a Backbone Edge Bridge's B-component.";
+        }
+        identity INTERFACE_KIND_TYPE_REMOTE_CUSTOMER_ACCESS_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be an S-TAG aware port of a Provider Bridge capable of providing Remote Customer Service Interfaces.";
+        }
+        identity INTERFACE_KIND_TYPE_VIRTUAL_INSTANCE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the port can be a virtual S-TAG aware port within a Backbone Edge Bridge's I-component which is responsible for handling S-tagged traffic for a specific backbone service instance.";
+        }
+        identity INTERFACE_KIND_TYPE_STATION_FACING_BRIDGE_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the station-facing Bridge Port in a EVB Bridge.";
+        }
+        identity INTERFACE_KIND_TYPE_UPLINK_ACCESS_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the uplink access port in an EVB Bridge or EVB station.";
+        }
+        identity INTERFACE_KIND_TYPE_UPLINK_RELAY_PORT {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "Indicates the uplink relay port in an EVB station.";
+        }
+        identity INTERFACE_KIND_TYPE_NOT_YET_DEFINED {
+            base INTERFACE_KIND_TYPE;
+            description    
+                "none";
+        }
+        identity INGRESS_TAG_FILTERING_TYPE {
+            description    
+                "none";
+        }
+        identity INGRESS_TAG_FILTERING_TYPE_UNTAGGED_AND_PRIORITY_FRAMES_ONLY {
+            base INGRESS_TAG_FILTERING_TYPE;
+            description    
+                "admit-only-untagged-and-priority-tagged. Priority frames are frames with VLAN header, but VID==0.";
+        }
+        identity INGRESS_TAG_FILTERING_TYPE_VLAN_TAGGED_FRAMES_ONLY {
+            base INGRESS_TAG_FILTERING_TYPE;
+            description    
+                "admit-only-VLAN-tagged-frames";
+        }
+        identity INGRESS_TAG_FILTERING_TYPE_ALL_FRAMES {
+            base INGRESS_TAG_FILTERING_TYPE;
+            description    
+                "admit-all-frames ";
+        }
+        identity INGRESS_TAG_FILTERING_TYPE_NOT_YET_DEFINED {
+            base INGRESS_TAG_FILTERING_TYPE;
+            description    
+                "none";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE {
+            description    
+                "none";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE_8P0D {
+            base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            description    
+                "The 3 bits of the Priority Code Point (PCP) segment of the VLAN header are used to express 8 Priority values and 0 drop eligibility values.";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE_7P1D {
+            base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            description    
+                "The 3 bits of the Priority Code Point (PCP) segment of the VLAN header are used to express 7 Priority values and 1 drop eligibility values.";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE_6P2D {
+            base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            description    
+                "The 3 bits of the Priority Code Point (PCP) segment of the VLAN header are used to express 6 Priority values and 2 drop eligibility values.";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE_5P3D {
+            base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            description    
+                "The 3 bits of the Priority Code Point (PCP) segment of the VLAN header are used to express 5 Priority values and 3 drop eligibility values.";
+        }
+        identity PCP_BITS_INTERPRETATION_KIND_TYPE_NOT_YET_DEFINED {
+            base PCP_BITS_INTERPRETATION_KIND_TYPE;
+            description    
+                "none";
+        }
+        identity ADMIN_POINT_TO_POINT_TYPE {
+            description    
+                "none";
+        }
+        identity ADMIN_POINT_TO_POINT_TYPE_FORCE_TRUE {
+            base ADMIN_POINT_TO_POINT_TYPE;
+            description    
+                "force-true. Indicates that this port should always be treated as if it is connected to a point-to-point link. Name in ieee802-dot1q-bridge.yang: force-true.";
+        }
+        identity ADMIN_POINT_TO_POINT_TYPE_FORCE_FALSE {
+            base ADMIN_POINT_TO_POINT_TYPE;
+            description    
+                "force-false. Indicates that this port should be treated as having a shared media connection. Name in ieee802-dot1q-bridge.yang: force-false.";
+        }
+        identity ADMIN_POINT_TO_POINT_TYPE_AUTO {
+            base ADMIN_POINT_TO_POINT_TYPE;
+            description    
+                "auto. Indicates that this port is considered to have a point-to-point link if it is an Aggregator and all of its members are aggregatable, or if the MAC entity is configured for full duplex operation, either through auto-negotiation or by management means. Name in ieee802-dot1q-bridge.yang: auto.";
+        }
+        identity ADMIN_POINT_TO_POINT_TYPE_NOT_YET_DEFINED {
+            base ADMIN_POINT_TO_POINT_TYPE;
+            description    
+                "none";
+        }
+        identity GRANULARITY_PERIOD_TYPE {
+            description    
+                "none";
+        }
+        identity GRANULARITY_PERIOD_TYPE_UNKNOWN {
+            base GRANULARITY_PERIOD_TYPE;
+            description    
+                "none";
+        }
+        identity GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN {
+            base GRANULARITY_PERIOD_TYPE;
+            description    
+                "none";
+        }
+        identity GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS {
+            base GRANULARITY_PERIOD_TYPE;
+            description    
+                "none";
+        }
+        identity GRANULARITY_PERIOD_TYPE_NOT_YET_DEFINED {
+            base GRANULARITY_PERIOD_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE {
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_NON-ALARMED {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_WARNING {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_MAJOR {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_MINOR {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_CRITICAL {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity SEVERITY_TYPE_NOT_YET_DEFINED {
+            base SEVERITY_TYPE;
+            description    
+                "none";
+        }
+        identity INTERFACE_STATUS_TYPE {
+            description    
+                "none";
+        }
+        identity INTERFACE_STATUS_TYPE_UP {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Ready to pass packets.";
+        }
+        identity INTERFACE_STATUS_TYPE_DOWN {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "The interface does not pass any packets.";
+        }
+        identity INTERFACE_STATUS_TYPE_TESTING {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "In some test mode.  No operational packets can be passed.";
+        }
+        identity INTERFACE_STATUS_TYPE_UNKNOWN {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Status cannot be determined for some reason.";
+        }
+        identity INTERFACE_STATUS_TYPE_DORMANT {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Waiting for some external event.";
+        }
+        identity INTERFACE_STATUS_TYPE_NOT_PRESENT {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Some component (typically hardware) is missing.";
+        }
+        identity INTERFACE_STATUS_TYPE_LOWER_LAYER_DOWN {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Down due to state of lower-layer interface(s).";
+        }
+        identity INTERFACE_STATUS_TYPE_ADMIN_DOWN {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "Down due to configuration.";
+        }
+        identity INTERFACE_STATUS_TYPE_NOT_YET_DEFINED {
+            base INTERFACE_STATUS_TYPE;
+            description    
+                "none";
+        }
+        /****************************************
+        * package super-types
+        **************************************/ 
+            typedef granularity-period-type {
+                type identityref {
+                    base GRANULARITY_PERIOD_TYPE;
+                }
+                description    
+                "The enumeration with the options for granularity period of the performance data.";
+            }
+            typedef severity-type {
+                type identityref {
+                    base SEVERITY_TYPE;
+                }
+                description    
+                "none";
+            }
+            typedef interface-status-type {
+                type identityref {
+                    base INTERFACE_STATUS_TYPE;
+                }
+                description    
+                "Current Interface Status";
+            }
+            grouping problem-kind-severity-type {
+                leaf problem-kind-name {
+                    type string;
+                    description    
+                    "Name of the alarm according to SupportedAlarmList";
+                }
+                leaf problem-kind-severity {
+                    type severity-type;
+                    default "SEVERITY_TYPE_NOT_YET_DEFINED";
+                    description    
+                    "Severity of this type of alarm.";
+                }
+                description    
+                "none";
+            }
+
+        grouping pcp-bits-to-priority-mapping-type {
+            leaf to-be-decoded-pcp-bits-value {
+                type int8;
+                description    
+                    "priority-code-point. Value of the 3 Priority Code Point (PCP) bits of the VLAN header, which is to be interpreted into Priority and eligibility. Name in ieee802-dot1q-bridge.yang: priority-code-point.";
+            }
+            leaf associated-priority-value {
+                type int8;
+                default "-1";
+                description    
+                    "priority. Priority value associated to the value of the 3 Priority Code Point (PCP) bits of the VLAN header. Values from 0 to 7 (inclusive). Name in ieee802-dot1q-bridge.yang: priority.";
+            }
+            leaf associated-drop-eligibility {
+                type boolean;
+                default "false";
+                description    
+                    "drop-eligible. Drop eligibility associated to the value of the 3 Priority Code Point (PCP) bits of the VLAN header. Name in ieee802-dot1q-bridge.yang: drop-eligible.";
+            }
+            description    
+                "priority-map. The Priority Code Point decoding mapping describes how to decode the PCP-bits of the ingress VLAN header into Priority value and drop eligibility. If no corresponding pcpBitToPriorityMappingType instance exists, the mapping of the respective pcpBitsValue shall follow the standard, which is defined in Table6-3 on page 143 of IEEE802.1Q-2018. Name in ieee802-dot1q-bridge.yang: priority-map.";
+        }
+        grouping priority-to-pcp-bits-mapping-type {
+            leaf to-be-encoded-priority-value {
+                type int8;
+                description    
+                    "priority. Priority value, which is to be encoded into a value of the 3 Priority Code Point (PCP) bits of the egress VLAN header. Name in ieee802-dot1q-bridge.yang: priority.";
+            }
+            leaf to-be-encoded-drop-eligibility {
+                type boolean;
+                description    
+                    "dei. Drop eligibility, which is to be encoded into a value of the 3 Priority Code Point (PCP) bits of the egress VLAN header. Name in ieee802-dot1q-bridge.yang: dei.";
+            }
+            leaf associated-pcp-bits-value {
+                type int8;
+                default "-1";
+                description    
+                    "priority-code-point. Value of the 3 Priority Code Point (PCP) bits of the egress VLAN header, which is to be associated with the Priority value and eligibility. Name in ieee802-dot1q-bridge.yang: priority-code-point.";
+            }
+            description    
+                "priority-map. The Priority Code Point encoding mapping describes how to encode Priority value and drop eligibility into the PCP-bits of the egress VLAN header. If no corresponding PriorityToPcpBitsMappingType instance exists, the mapping of the respective Priority value shall follow the standard, which is defined in Table6-2 on page 143 of IEEE802.1Q-2018. Name in ieee802-dot1q-bridge.yang: priority-map.";
+        }
+        grouping received-priority-overwriting-type {
+            leaf to-be-overwritten-priority-value {
+                type int8;
+                description    
+                    "Received Priority value, which is to be overwritten by the Regenerated Priority value. ieee802-dot1q-bridge.yang is explicitly listing all values, and has been slightly shortened.";
+            }
+            leaf new-priority-value {
+                type int8;
+                default "-1";
+                description    
+                    "Regenerated Priority value, which is substituting the Received Priority value. ieee802-dot1q-bridge.yang is explicitly listing all values, and has been slightly shortened.";
+            }
+            description    
+                "The priority regeneration table provides the ability to map incoming priority values on a per-Port basis, under management control. If no corresponding ReceivedPriorityOverwritingType instance exists, the Regenerated Priority value is the same as the Received Priority value. ";
+        }
+        grouping external-to-internal-vlan-id-mapping-type {
+            leaf external-vlan-id {
+                type int16;
+                description    
+                    "local-vid. VID of the frame as long as it is inside the interface. If ingress frame, this would be before translation. If egress frame (AND egressVidTranslationMapping not activated!), this would be after translation. Name in ieee802-dot1q-bridge.yang: local-vid.";
+            }
+            leaf internal-vlan-id {
+                type int16;
+                default "-1";
+                description    
+                    "relay-vid. VID of the frame as long as it is inside the bridge. If ingress frame, this would be after translation. If egress frame (AND egressVidTranslationMapping not activated!), this would be before translation. Name in ieee802-dot1q-bridge.yang: relay-vid.";
+            }
+            description    
+                "vid-translations. To configure the VID Translation Table (6.9) associated with a Port. If no translation relationship is defined for some VID value, then it is assumed that the VID does not change. The translation relation applies on ingress and egress frames unless a separate egress translation relations are defined in egressVidTranslationMapping. Name in ieee802-dot1q-bridge.yang: vid-translations.
+                ";
+        }
+        grouping internal-to-egress-vlan-id-mapping-type {
+            leaf internal-vlan-id {
+                type int16;
+                description    
+                    "relay-vid. VID of the frame as long as it is inside the bridge, but before translating the VID and egress of the frame at this interface. Name in ieee802-dot1q-bridge.yang: relay-vid.";
+            }
+            leaf egress-vlan-id {
+                type int16;
+                default "-1";
+                description    
+                    "local-vid. VID of the egress frame after translating the VID. Name in ieee802-dot1q-bridge.yang: local-vid.";
+            }
+            description    
+                "egress-vid-translationsType. To configure the Egress VID Translation Table (6.9) associated with a Port. If no translation relationship is defined for some VID value, then it is assumed that the VID does not change. Name in ieee802-dot1q-bridge.yang: egress-vid-translationsType.";
+        }
+        grouping forwarded-protocol-vlan-id-grouping-type {
+            leaf forwarded-protocol-group-id {
+                type int32;
+                description    
+                    "group-id. Bridge wide identifier of a group of protocols that shall be forwarded within the listed VLANs. Name in ieee802-dot1q-bridge.yang: group-id.";
+            }
+            leaf-list forwarded-vlan-id-list {
+                type int64;
+                default "-1";
+                description     
+                 "vid. List of VLANs that shall forward the protocols, which are consolidated unter the protocolGroupId. Name in ieee802-dot1q-bridge.yang: vid.";
+            }
+            description    
+                "protocol-group-vid-set. Limits the forwarded frames of a list of VIDs to the protocols, which are consolidated under a specific group ID. The protocol group is to be defined on Bridge level. Name in ieee802-dot1q-bridge.yang: protocol-group-vid-set.";
+        }
+        grouping service-access-priority-mapping-type {
+            leaf c-vlan-priority-value {
+                type int8;
+                description    
+                    "C-VLAN Priority, which shall be translated into the associated S-VLAN Priority.  ieee802-dot1q-bridge.yang is explicitly listing all values, and has been slightly shortened.";
+            }
+            leaf s-vlan-pcp-bits-value {
+                type int8;
+                default "-1";
+                description    
+                    "S-VLAN Priority, which shall be associated with this C-VLAN Priority. ieee802-dot1q-bridge.yang is explicitly listing all values, and has been slightly shortened.";
+            }
+            description    
+                "service-access-priority-table-grouping. Describes how the PCP-bits of the priority S-VLAN tag (no VID value) get derived from the Priority value. Name in ieee802-dot1q-bridge.yang: service-access-priority-table-grouping.";
+        }
+        grouping priority-to-traffic-class-mapping-type {
+            leaf priority-value {
+                type int8;
+                description    
+                    "priority. Priority value, which is to be mapped into a Traffic Class (queue). Values from 0 to 7 (inclusive). Name in ieee802-dot1q-bridge.yang: priority.";
+            }
+            leaf traffic-class-value {
+                type int8;
+                default "-1";
+                description    
+                    "traffic-class. Index of the Traffic Class (queue), which gets associated with the Priority Value. Values from 0 to 7 (inclusive). Name in ieee802-dot1q-bridge.yang: traffic-class.";
+            }
+            description    
+                "traffic-class-table-grouping. If no corresponding PriorityToTrafficClassMappingType instance exists, the mapping of the respective Priority shall follow the standard, which is defined in Table 8-5 on page 198 of IEEE802.1Q-2018. This modeling is shortening the ieee802-dot1q-bridge.yang from a table to a list, because it allows only configuring the values for the number of traffic classes, which is actually available at the device. Name in ieee802-dot1q-bridge.yang: traffic-class-table-grouping.";
+        }
+        grouping vlan-interface-current-problem-type {
+            leaf problem-name {
+                type string;
+                default "Problem name not specified.";
+                config false;
+                description    
+                    "Name of the alarm according to SupportedAlarmList";
+            }
+            uses current-problem;
+            description    
+                "none";
+        }
+        grouping vlan-interface-performance-type {
+            leaf total-bytes-input {
+                type int64;
+                units "Bytes";
+                default "-1";
+                config false;
+                description    
+                    "Received data volume in Byte.";
+            }
+            leaf total-frames-input {
+                type int64;
+                units "frames";
+                default "-1";
+                config false;
+                description    
+                    "The total number of Ethernet frames received for the specified VLAN ID(s), including those received in error";
+            }
+            leaf total-bytes-output {
+                type int64;
+                units "Bytes";
+                default "-1";
+                config false;
+                description    
+                    "Sent data volume in Byte.";
+            }
+            leaf total-frames-output {
+                type int64;
+                units "frames";
+                default "-1";
+                config false;
+                description    
+                    "The total number of Ethernet frames for the specified VLAN ID(s) that the device supplied to the lower layers for transmission. This includes frames generated locally and those forwarded by the device.";
+            }
+            description    
+                "none";
+        }
+        grouping vlan-interface-current-performance-type {
+            container performance-data {
+                config false;
+                uses vlan-interface-performance-type;
+                description    
+                "none";
+            }
+            uses current-performance;
+            description    
+                "none";
+        }
+        grouping vlan-interface-historical-performance-type {
+            container performance-data {
+                config false;
+                uses vlan-interface-performance-type;
+                description    
+                "none";
+            }
+            uses historical-performance;
+            description    
+                "none";
+        }
+
+}

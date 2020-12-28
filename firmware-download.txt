@@ -1,0 +1,67 @@
+<<Owned Operation>>
+FirmwareDownload
+input: FirmwareDownloadInput[1] = input not yet defined
+output: FirmwareDownloadOutput[1] = output not yet defined
+
+<<Data type>>
+FirmwareDownloadInput
+fileList: String[1..*] = supported files not yet defined
+remoteFilePath: RemotePath[1] = remote path not yet defined
+destinationBankType: BankType[1] = NONE 
+
+<<Data type>>
+FirmwareDownloadOutput
+firmwareDownloadStatus: StatusType[1] = NONE
+
+
+RemotePath
+protocol: ProtocolType[1] = NONE
+host: String[1] = Host not yet defined
+port(optional): Integer[1] = -1
+path: String[1] = Path not yet defined
+userName: String[1] = User name not yet defined
+password: String[1] = password not yet defined 
+
+<Enumeration>
+ProtocolType
+FTP
+SFTP
+HTTP
+NONE
+
+<Enumeration>
+BankType
+ACTIVE
+STANDBY
+NONE
+
+<Enumeration>
+StatusType
+SUCCESS
+FAILURE
+NONE
+
+
+<<Owned Operation>>
+FirmwareActivation
+input: FirmwareActivationInput[1] = input not yet defined
+output: FirmwareActivationOutput[1] = output not yet defined
+
+<<Data type>>
+FirmwareActivationInput
+fileList: String[1..*] = supported files not yet defined
+slotName: String[1] = slot name not yet defined
+validationTimer: Integer[1] = -1
+
+<<Data type>>
+FirmwareActivationOutput
+firmwareActivationStatus: StatusType[1] = NONE
+firmwareActivationTimeStamp: DateTime[1] = 2010-11-20T14:00:00+01:00
+
+
+
+
+
+
+
+

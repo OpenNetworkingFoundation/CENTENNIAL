@@ -1,0 +1,186 @@
+{
+	"variables": [],
+	"info": {
+		"name": "TEF",
+		"_postman_id": "bb7f40bb-7167-455b-188b-51683f7ba54e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sync-from all devices - dry run",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:devices/sync-from",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Media-Type",
+						"value": "application/yang-data+xml",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/yang-data+xml",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<input>\n<dry-run/>\n</input>"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "ncs-state",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs-monitoring:ncs-state",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "All package oper-status",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:packages?fields=package(name;oper-status)",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Device List (json)",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:devices/device?fields=name;address;port;device-type(netconf(ned-id))",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/yang-data+json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Device LTPs",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:devices/device=ericsson_513250010/config/core-model-1-4:control-construct/logical-termination-point?fields=uuid",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/yang-data+json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Device one LTP in full",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:devices/device=ericsson_513250010/config/core-model-1-4:control-construct/logical-termination-point=RF-2146697601",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/yang-data+json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "set tx power dry run",
+			"request": {
+				"url": "http://172.31.4.89:8080/restconf/data/tailf-ncs:devices/device=ericsson_513250010/config/core-model-1-4:control-construct/logical-termination-point=RF-2146697601/layer-protocol=2146697601/air-interface-2-0:air-interface-pac/air-interface-configuration/tx-power?dry-run=cli",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/yang-data+xml",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/yang-data+json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"tx-power\": -5\n}"
+				},
+				"description": "remove dry run option at end of url to make it happen for real\nremeber to set it back to what it should be (-5)\n\n"
+			},
+			"response": []
+		}
+	]
+}

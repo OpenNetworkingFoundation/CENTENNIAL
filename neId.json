@@ -1,0 +1,198 @@
+{
+    "tailf-ncs:device": [
+        {
+            "name": "INRX-DEHAM-93-0003",
+            "address": "172.31.0.82",
+            "port": 22,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "juniper-junos-nc-4.6:juniper-junos-nc-4.6"
+                }
+            }
+        },
+        {
+            "name": "INRX-DEHAM-93-0004",
+            "address": "172.31.0.93",
+            "port": 22,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "juniper-junos-nc-4.6:juniper-junos-nc-4.6"
+                }
+            }
+        },
+        {
+            "name": "INRX-DEMUC-91-0005",
+            "address": "172.29.45.26",
+            "port": 22
+        },
+        {
+            "name": "INRX-DEMUC-91-0006",
+            "address": "172.29.45.27",
+            "port": 22
+        },
+        {
+            "name": "MBRC-DEHAM-07-0111",
+            "address": "172.31.6.46",
+            "port": 22
+        },
+        {
+            "name": "MBRH-DEHAM-07-0015",
+            "address": "172.30.0.132",
+            "port": 22
+        },
+        {
+            "name": "MBRH-DEHAM-07-0023",
+            "address": "172.30.0.140",
+            "port": 22
+        },
+        {
+            "name": "MBRL-DEHAM-07-0020",
+            "address": "172.30.0.131",
+            "port": 22,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "huawei-nc-nc-1.0:huawei-nc-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "cisco_0",
+            "address": "127.0.0.1",
+            "port": 12023,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "cisco-iosxr-nc-7.0:cisco-iosxr-nc-7.0"
+                }
+            }
+        },
+        {
+            "name": "dbrx-deham-91-0002",
+            "address": "172.31.0.34",
+            "port": 22,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "cisco-iosxr-nc-7.0:cisco-iosxr-nc-7.0"
+                }
+            }
+        },
+        {
+            "name": "ericsson_513250002",
+            "address": "172.29.145.39",
+            "port": 8302,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "onf-microwave-nc-1.0:onf-microwave-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "ericsson_513250010",
+            "address": "172.29.145.39",
+            "port": 8301,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "onf-microwave-nc-1.0:onf-microwave-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "ericsson_513250011",
+            "address": "172.29.145.39",
+            "port": 8302,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "onf-microwave-nc-1.0:onf-microwave-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "huawei-co-13618",
+            "address": "172.29.145.38",
+            "port": 17830,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "hua-onf-mw-nc-1.0:hua-onf-mw-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "huawei-co-13619",
+            "address": "172.29.145.38",
+            "port": 17831,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "tailf-ncs-ned:netconf"
+                }
+            }
+        },
+        {
+            "name": "nedbuilder-ericsson_513250002",
+            "address": "172.29.145.39",
+            "port": 8302,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "tailf-ncs-ned:netconf"
+                }
+            }
+        },
+        {
+            "name": "nedbuilder-siae-co-12970",
+            "address": "172.29.145.45",
+            "port": 33001,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "tailf-ncs-ned:netconf"
+                }
+            }
+        },
+        {
+            "name": "oc0",
+            "address": "127.0.0.1",
+            "port": 12022,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "xr-openconfig-nc-1.0:xr-openconfig-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "siae-co-12969",
+            "address": "172.29.145.45",
+            "port": 33002,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "siae-onf-mw-nc-1.0:siae-onf-mw-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "siae-co-12970",
+            "address": "172.29.145.45",
+            "port": 33001,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "siae-onf-mw-nc-1.0:siae-onf-mw-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "zte_nr8120_14307",
+            "address": "172.29.147.236",
+            "port": 830,
+            "device-type": {
+                "netconf": {
+                    "ned-id": "onf-microwave-nc-1.0:onf-microwave-nc-1.0"
+                }
+            }
+        },
+        {
+            "name": "zte_nr8120_14308",
+            "address": "172.29.147.237",
+            "device-type": {
+                "netconf": {
+                    "ned-id": "onf-microwave-nc-1.0:onf-microwave-nc-1.0"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,230 @@
+{
+    "core-model-1-4:logical-termination-point": [
+        {
+            "uuid": "RF-2146697601",
+            "client-ltp": [
+                "HMS-2146697601"
+            ],
+            "layer-protocol": [
+                {
+                    "local-id": "2146697601",
+                    "layer-protocol-name": "air-interface-2-0:LAYER_PROTOCOL_NAME_TYPE_AIR_LAYER",
+                    "lp-direction": "core-model-1-4:TERMINATION_DIRECTION_BIDIRECTIONAL",
+                    "termination-state": "core-model-1-4:TERMINATION_STATE_TERMINATED_BIDIRECTIONAL",
+                    "name": [
+                        {
+                            "value-name": "lpName",
+                            "value": "2146697601"
+                        }
+                    ],
+                    "administrative-control": "core-model-1-4:ADMINISTRATIVE_CONTROL_UNLOCK",
+                    "lifecycle-state": "core-model-1-4:LIFECYCLE_STATE_INSTALLED",
+                    "air-interface-2-0:air-interface-pac": {
+                        "air-interface-configuration": {
+                            "air-interface-name": "You can add information in this Description field that will be included in the Node Report, for example polarization, antenna type or logging a site visit. Max allowed numbers of characters in this Description field is 800.",
+                            "transmitted-radio-signal-id": {
+                                "alphanumeric-radio-signal-id": "TH5n"
+                            },
+                            "expected-radio-signal-id": {
+                                "alphanumeric-radio-signal-id": "Fbd3"
+                            },
+                            "tx-frequency": 22470000,
+                            "transmission-mode-min": "56000-128-v0",
+                            "tx-power": -4,
+                            "xpic-is-on": true,
+                            "maintenance-timer": 900,
+                            "problem-kind-severity-list": [
+                                {
+                                    "problem-kind-name": "AMS 15 m threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "AMS 24 h threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "BBE 15 min threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "BBE 24 h threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "BER"
+                                },
+                                {
+                                    "problem-kind-name": "Dmod Clock"
+                                },
+                                {
+                                    "problem-kind-name": "ES 15 min threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "ES 24 h threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "Early Warning"
+                                },
+                                {
+                                    "problem-kind-name": "High BER"
+                                },
+                                {
+                                    "problem-kind-name": "IF LOS R2L"
+                                },
+                                {
+                                    "problem-kind-name": "LOF R2L"
+                                },
+                                {
+                                    "problem-kind-name": "LOS"
+                                },
+                                {
+                                    "problem-kind-name": "Low BER"
+                                },
+                                {
+                                    "problem-kind-name": "Mod Index"
+                                },
+                                {
+                                    "problem-kind-name": "RF Input Level"
+                                },
+                                {
+                                    "problem-kind-name": "RF Input Threshold"
+                                },
+                                {
+                                    "problem-kind-name": "RF Output Level"
+                                },
+                                {
+                                    "problem-kind-name": "RF Output Level ATPC"
+                                },
+                                {
+                                    "problem-kind-name": "RX Frequency"
+                                },
+                                {
+                                    "problem-kind-name": "Radio Frame"
+                                },
+                                {
+                                    "problem-kind-name": "Radio ID"
+                                },
+                                {
+                                    "problem-kind-name": "Rx AFC"
+                                },
+                                {
+                                    "problem-kind-name": "Rx IF Input"
+                                },
+                                {
+                                    "problem-kind-name": "SES 15 min threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "SES 24 h threshold crossing"
+                                },
+                                {
+                                    "problem-kind-name": "TX Frequency"
+                                },
+                                {
+                                    "problem-kind-name": "Tx IF Input"
+                                },
+                                {
+                                    "problem-kind-name": "Unavailable Period"
+                                },
+                                {
+                                    "problem-kind-name": "WST LOS L2R"
+                                }
+                            ],
+                            "g-826-threshold-cross-alarm-list": [
+                                {
+                                    "g-826-value-kind": "air-interface-2-0:G_826_TYPE_SES",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "alarm-raising-threshold": 20
+                                },
+                                {
+                                    "g-826-value-kind": "air-interface-2-0:G_826_TYPE_SES",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "alarm-raising-threshold": 15,
+                                    "alarm-clearing-threshold": 1
+                                },
+                                {
+                                    "g-826-value-kind": "air-interface-2-0:G_826_TYPE_ES",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "alarm-raising-threshold": 1500
+                                },
+                                {
+                                    "g-826-value-kind": "air-interface-2-0:G_826_TYPE_ES",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "alarm-raising-threshold": 180,
+                                    "alarm-clearing-threshold": 20
+                                }
+                            ],
+                            "xlts-threshold-cross-alarm-list": [
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_RLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "xlts-threshold-cross-alarm-definition-number": 0,
+                                    "xlts-level": -99,
+                                    "amount-of-seconds": 20
+                                },
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_RLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "xlts-threshold-cross-alarm-definition-number": 1,
+                                    "xlts-level": -98,
+                                    "amount-of-seconds": 1500
+                                },
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_RLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "xlts-threshold-cross-alarm-definition-number": 0,
+                                    "xlts-level": -99,
+                                    "amount-of-seconds": 150
+                                },
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_RLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "xlts-threshold-cross-alarm-definition-number": 1,
+                                    "xlts-level": -98,
+                                    "amount-of-seconds": 180
+                                },
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_TLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "xlts-threshold-cross-alarm-definition-number": 0,
+                                    "xlts-level": 35,
+                                    "amount-of-seconds": 1500
+                                },
+                                {
+                                    "level-threshold-second-kind": "air-interface-2-0:XLEVEL_THRESHOLD_SECOND_KIND_TYPE_TLTS",
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "xlts-threshold-cross-alarm-definition-number": 0,
+                                    "xlts-level": 35,
+                                    "amount-of-seconds": 180
+                                }
+                            ],
+                            "acm-threshold-cross-alarm-list": [
+                                {
+                                    "acm-threshold-cross-alarm-definition-number": 0,
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-15-MIN",
+                                    "transmission-mode": "56000-128-v0",
+                                    "amount-of-seconds": 180
+                                },
+                                {
+                                    "acm-threshold-cross-alarm-definition-number": 1,
+                                    "granularity-period": "air-interface-2-0:GRANULARITY_PERIOD_TYPE_PERIOD-24-HOURS",
+                                    "transmission-mode": "56000-128-v0",
+                                    "amount-of-seconds": 1500
+                                }
+                            ],
+                            "performance-monitoring-is-on": true
+                        }
+                    }
+                }
+            ],
+            "ltp-direction": "core-model-1-4:TERMINATION_DIRECTION_BIDIRECTIONAL",
+            "name": [
+                {
+                    "value-name": "externalLabel",
+                    "value": "You can add information in this Description field that will be included in the Node Report, for example polarization, antenna type or logging a site visit. Max allowed numbers of characters in this Description field is 800."
+                },
+                {
+                    "value-name": "ltpName",
+                    "value": "RF 1/3.1/1"
+                }
+            ],
+            "administrative-control": "core-model-1-4:ADMINISTRATIVE_CONTROL_UNLOCK",
+            "lifecycle-state": "core-model-1-4:LIFECYCLE_STATE_INSTALLED"
+        }
+    ]
+}

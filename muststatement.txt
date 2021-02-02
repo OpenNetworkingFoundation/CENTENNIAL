@@ -1,0 +1,119 @@
+Airinterface 
+
+leafref changes for path and must statement to point the same LTP instance.
+
+For the attributes transmission-mode-min,transmission-mode-max,acm-threshold-cross-alarm-list(acm-threshold-cross-alarm-type)/transmission-mode in air-interface-configuration , pyang tool reports warning with regards to the must statements defined , 
+
+air-interface-2-0.yang:607: warning: node "air-interface-2-0::air-interface-capability" is config false and is not part of the accessible tree
+air-interface-2-0.yang:616: warning: node "air-interface-2-0::air-interface-capability" is config false and is not part of the accessible tree
+air-interface-2-0.yang:1567: warning: node "air-interface-2-0::air-interface-capability" is config false and is not part of the accessible tree
+
+the current "must" statement for the attributes not pointing to the capabilities of the same LTP instance.
+
+Possible solution :
+
+leaf transmission-mode-min {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/air-interface:air-interface-pac/air-interface:air-interface-capability/air-interface:transmission-mode-list/air-interface:transmission-mode-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "Minimum transmission mode to be configured (in case adaptive modulation is not used, this value represents also the fixed transmission mode).";
+            }
+leaf transmission-mode-max {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/air-interface:air-interface-pac/air-interface:air-interface-capability/air-interface:transmission-mode-list/air-interface:transmission-mode-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "Maximum transmission mode to be configured.";
+            }
+leaf transmission-mode {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../../core-model:local-id]/air-interface:air-interface-pac/air-interface:air-interface-capability/air-interface:transmission-mode-list/air-interface:transmission-mode-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "none";
+            }
+			
+			
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+hybrid-mw-structure
+
+leafref changes for path and must statement to point the same LTP instance.
+
+For the attribute tdm-structure-kind in hybrid-mw-structure-configuration , pyang tool reports warning with regards to the must statements defined , 
+
+hybrid-mw-structure-2-0.yang:440: warning: node "hybrid-mw-structure-2-0::hybrid-mw-structure-capability" is config false and is not part of the accessible tree
+
+the current "must" statement for the attributes not pointing to the capabilities of the same LTP instance.
+
+Possible solution :
+
+leaf tdm-structure-kind {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/hybrid-mw-structure:hybrid-mw-structure-pac/hybrid-mw-structure:hybrid-mw-structure-capability/hybrid-mw-structure:supported-tdm-structure-kind-list/hybrid-mw-structure:tdm-structure-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "TDM frame to be applied.";
+            }
+			
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tdm structure kind
+
+leafref changes for path and must statement to point the same LTP instance.
+
+For the attribute tdm-container-kind in tdm-container-configuration , pyang tool reports warning with regards to the must statements defined , 
+
+tdm-container-2-0.yang:474: warning: node "tdm-container-2-0::tdm-container-capability" is config false and is not part of the accessible tree
+
+the current "must" statement for the attributes not pointing to the capabilities of the same LTP instance.
+
+Possible solution :
+leaf tdm-container-kind {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/tdm-container:tdm-container-pac/tdm-container:tdm-container-capability/tdm-container:supported-tdm-container-kind-list/tdm-container:tdm-container-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "Type of TDM container.";
+            }
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+wire-interface
+
+leafref changes for path and must statement to point the same LTP instance.
+
+For the attributes fixed-pmd-kind,auto-negotiation-pmd-list in wire-interface-configuration , pyang tool reports warning with regards to the must statements defined , 
+
+wire-interface-2-0.yang:654: warning: node "wire-interface-2-0::wire-interface-capability" is config false and is not part of the accessible tree
+wire-interface-2-0.yang:663: warning: node "wire-interface-2-0::wire-interface-capability" is config false and is not part of the accessible tree
+the current "must" statement for the attributes not pointing to the capabilities of the same LTP instance.
+
+Possible solution :
+leaf fixed-pmd-kind {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/wire-interface:wire-interface-pac/wire-interface:wire-interface-capability/wire-interface:supported-pmd-kind-list/wire-interface:pmd-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description    
+                    "If (autoPmdNegotiationIsOn==0) : Configuration of the concrete kind of Physical Medium Dependent (PMD). If (autoNegotiationIsOn=1) value of this field becomes irrelevant";
+            }
+            leaf-list auto-negotiation-pmd-list {
+                type leafref {
+                    path "/core-model:control-construct/core-model:logical-termination-point[core-model:uuid = current()/../../../../core-model:uuid]/core-model:layer-protocol[core-model:local-id = current()/../../../core-model:local-id]/wire-interface:wire-interface-pac/wire-interface:wire-interface-capability/wire-interface:supported-pmd-kind-list/wire-interface:pmd-name";
+                    require-instance false;
+                }
+                must  'deref(.) = current()';
+                description     
+                 "If (autoPmdNegotiationIsOn==1) AND (autoNegotiationPmdSelectionIsAvail==1), this list defines the selection of PMDs the automated negotiation process is allowed to choose from. If no entry, the automated negotiation process is allowed to choose from all available PMDs.";
+            }
